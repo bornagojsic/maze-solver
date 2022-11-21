@@ -134,7 +134,7 @@ def generiraj_labirint(m, n):
             labirint, mogucnosti = postavi_polje(labirint, mogucnosti, x, y, odabrano_polje)
             for dx in [-1, 0, 1]:
                 for dy in [-1, 0, 1]:
-                    if 0 <= x + dx < m and 0 <= y + dy < n and mogucnosti[x + dx][y + dy]:
+                    if abs(dx) + abs(dy) <= 1 and 0 <= x + dx < m and 0 <= y + dy < n and mogucnosti[x + dx][y + dy]:
                         tocke_na_redu.append(Tocka(x + dx, y + dy))
         ### DEBUGGING
         """ else:
