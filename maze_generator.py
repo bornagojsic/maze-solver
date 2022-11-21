@@ -21,16 +21,6 @@ def printlabf(labirint):
                     f.write(f"{el} ")
             f.write("\n")
 
-def printlabf2(labirint):
-    with io.open("maze.txt", 'w', encoding="utf8") as f:
-        for red in labirint:
-            for el in red:
-                if el == None:
-                    f.write("x")
-                else:
-                    f.write(str(el))
-            f.write("\n")
-
 def printmog(mogucnosti):
     for red in mogucnosti:
         for lista in red:
@@ -115,10 +105,17 @@ def odaberi_tocku(tocke_na_redu, mogucnosti):
 def generiraj_labirint(m, n):
     labirint = [[None] * n for _ in range(m)]
     mogucnosti = [[[inicijaliziraj_polje(i) for i in range(11 + 1)] for _ in range(n)] for _ in range(m)]
-    mogucnosti[0] = [[inicijaliziraj_polje(i) for i in [0, 2, 8]] for _ in range(n)] ## gore su moguci '.' , '─' i '┬' 
-    mogucnosti[m - 1] = [[inicijaliziraj_polje(i) for i in [0, 2, 10]] for _ in range(n)] ## dolje su moguci '.' , '─' i '┴'
+    mogucnosti[0] = [[inicijaliziraj_polje(i) for i in [2, 8]] for _ in range(n)] ## gore su moguci '─' i '┬' 
+    mogucnosti[m - 1] = [[inicijaliziraj_polje(i) for i in [2, 10]] for _ in range(n)] ## dolje su moguci '─' i '┴'
     for i in range(m):
-        mogucnosti[i][0] = [inicijaliziraj_polje(i) for i in [0, 1, 7]] ## lijevo su moguci '.' , '|' i '├'
+        mogucnosti[i][0] = [inicijaliziraj_polje(i) for i in [1, 7]] ## lijevo su moguci '|' i '├'
+        mogucnosti[i][n-1] = [inicijaliziraj_polje(i) for i in [1, 9]] ## desno su moguci '|' i '┤'
+    
+    ## kutevi
+    mogucnosti[0][0] = [Polje4()]
+    mogucnosti[0][n-1] = [Polje5()]
+    mogucnosti[m-1][n-1] = [Polje6()]
+    mogucnosti[m-1][0] = [Polje3()]
 
     tocke_na_redu = [Tocka(0, 0)]
 
@@ -152,7 +149,7 @@ def main():
     m = int(input("m: "))
     n = int(input("n: "))
     labirint, mogucnosti = generiraj_labirint(m, n)
-    printlabf2(labirint)
+    printlabf(labirint)
     printmog(mogucnosti)
 
 
